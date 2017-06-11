@@ -4,5 +4,7 @@
 class Routes {
   
   public : 
+    
     char *getCThostFtdcTraderApi();
+
 };
