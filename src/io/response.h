@@ -34,6 +34,9 @@ class Response {
 		
 		// 事件句柄
 		static uv_loop_t *loop;
+
+    // 服务
+    static uv_tcp_t server;
 		
 		// 地址
 		static struct sockaddr_in addr;

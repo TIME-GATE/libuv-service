@@ -10,12 +10,11 @@ int IIOService::listen(const char *host, int port) {
 	
 	Response::loop = uv_default_loop(); 
   
-  uv_tcp_t server;  
-  uv_tcp_init(Response::loop, &server);  
-  uv_ip4_addr(host, port, &Response::addr); 
-  uv_tcp_bind(&server, (const struct sockaddr*)&Response::addr, 0);
+  uv_tcp_init(Response::loop, &Response::server);  
+  uv_ip4_addr(host, port, &Response::addr);
+  uv_tcp_bind(&Response::server, (const struct sockaddr*)&Response::addr, 0);
   
-	int listen_status = uv_listen((uv_stream_t*) &server, Response::default_backlog, Response::onConnect);   
+	int listen_status = uv_listen((uv_stream_t*)&Response::server, Response::default_backlog, Response::onConnect);   
 	
   if (listen_status) {   
   	fprintf(stderr, "Listen error %s\n", uv_strerror(listen_status));

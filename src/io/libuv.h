@@ -5,7 +5,7 @@
 #include <string>
 #include <uv.h>
 
-// 网络通信层
+// 通信层
 class IIOService {
 
   public : 
