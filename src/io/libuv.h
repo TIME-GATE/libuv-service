@@ -22,7 +22,7 @@ class IIOService {
     //int connect(const char *host, uint16_t port, int32_t seconds);
 
     // 停止本地服务/交易中心服务连接
-    //void stop();
+    //void shutdown();
 
 };
 
