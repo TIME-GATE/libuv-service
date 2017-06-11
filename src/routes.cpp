@@ -1,21 +1,13 @@
 #include "routes.h"
 #include "stdio.h"
-/*
+
 int main() {
-  CThostFtdcTraderApi * api = CThostFtdcTraderApi::CreateFtdcTraderApi("/home/zhang/Projects/libuv-service/data/trader");
-  MarketDataCollector mdCollector(api);
-
-  api->RegisterSpi(&mdCollector);
-  api->RegisterFront("tcp://127.0.0.1:17001");
-  THOST_TE_RESUME_TYPE one;
-  api->SubscribePrivateTopic(one);
-  api->SubscribePublicTopic(one);
-  api->Init();
-  api->Join();
+  
+  Routes *route = new Routes();
+  char *futures_str = route->getCThostFtdcTraderApi();
   return 1;
-}
-*/
 
+}
 
 char *Routes::getCThostFtdcTraderApi() {
       printf("start ...."); 
@@ -40,10 +32,10 @@ char *Routes::getCThostFtdcTraderApi() {
       
       printf("Init ....");
       api->Init();
-      
+
       printf("Join ....");
       api->Join();
-
+      
       printf("CThostFtdcInputOrderActionField ....\n");
       CThostFtdcInputOrderActionField *two;
       
@@ -53,3 +45,7 @@ char *Routes::getCThostFtdcTraderApi() {
        
       return "nihao";
 }
+
+
+
+
