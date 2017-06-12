@@ -44,6 +44,7 @@ char *Routes::getCThostFtdcTraderApi() {
       api->ReqOrderAction(two, 123);
        
       return "nihao";
+
 }
 
 
