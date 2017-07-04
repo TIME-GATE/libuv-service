@@ -1,9 +1,7 @@
 #include <cassert>
 #include "libuv.h"
 #include "../routes.h"
-#include "string.h"
 #include <vector>
-#include <string>
 #include <uv.h>
 
 using namespace std;
@@ -27,7 +25,7 @@ class Response {
 		// 读数据
 		static void send(uv_stream_t *client, ssize_t nread, const uv_buf_t *buff);	
     
-		// 监听新的链接
+		// 监听新链接
 		static void onConnect(uv_stream_t *server, int status);
 	
 	public : 
