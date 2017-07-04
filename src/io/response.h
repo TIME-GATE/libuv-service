@@ -27,8 +27,8 @@ class Response {
     
 		// 监听新链接
     static void onConnect(uv_stream_t *server, int status);
-	
-	public : 
+    
+  public : 
 		
 		// 事件句柄
     static uv_loop_t *loop;
