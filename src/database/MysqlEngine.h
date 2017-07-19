@@ -52,14 +52,14 @@ public :
   bool remove( const std::string & sqlcmd, uint32_t & naffected );
 
 private :
-	enum {
-  	eMysqlEngine_ConnectTimeout        = 5,    // 连接超时时间
+  enum {
+    eMysqlEngine_ConnectTimeout        = 5,    // 连接超时时间
     eMysqlEngine_ReadTimeout           = 5,    // 读超时时间
     eMysqlEngine_WriteTimeout          = 5,    // 写超时时间
   };
 
 private :
-	std::string         m_Host;         // 主机地址
+  std::string         m_Host;         // 主机地址
   uint16_t            m_Port;         // 端口号
   std::string         m_Username;     // 用户名
   std::string         m_Password;     // 密码
@@ -67,7 +67,7 @@ private :
   std::string         m_Charsets;     // 字符集
 
 private :
-	MYSQL *             m_DBHandler;    // 数据库句柄
+  MYSQL *             m_DBHandler;    // 数据库句柄
 };
 
 #endif
