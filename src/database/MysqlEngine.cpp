@@ -108,7 +108,7 @@ bool MysqlEngine::insert( const std::string & sqlcmd, uint64_t & insertid ) {
     LOG_ERROR( "MysqlEngine::insert(SQLCMD:'%s') : Result:%d, Error:(%d,'%s') .\n",
       sqlcmd.c_str(), rc, mysql_errno(m_DBHandler), mysql_error(m_DBHandler) );
     return false;
-	}
+  }
   
   // 获取返回的自增ID
   insertid = mysql_insert_id( m_DBHandler );
@@ -129,59 +129,60 @@ bool MysqlEngine::query( const std::string & sqlcmd, Results & results ) {
   
   MYSQL_RES * result = mysql_store_result( m_DBHandler );
   if ( result == NULL ) {
-		LOG_ERROR( "MysqlEngine::query(SQLCMD:'%s') : Store Result Failed .\n", sqlcmd.c_str() );
-		return false;
-	}
-
-	MYSQL_ROW row;
-	uint32_t nfields = mysql_num_fields( result );
-	while ( (row = mysql_fetch_row(result)) != NULL ) {
-		Result tmpresult;
-		uint64_t * lengths = mysql_fetch_lengths( result );
-
-		for ( uint32_t i = 0; i < nfields; ++i ) {
-			tmpresult.push_back( std::string( row[i], lengths[i] ) );
-		}
-		
-		results.push_back( tmpresult );
-	}
-
-	mysql_free_result( result );
-	LOG_TRACE( "MysqlEngine::query(SQLCMD:'%s') : ResultCount:%lu .\n", sqlcmd.c_str(), results.size() );
-
-	return true;
+    LOG_ERROR( "MysqlEngine::query(SQLCMD:'%s') : Store Result Failed .\n", sqlcmd.c_str() );
+    return false;
+  }
+  
+  MYSQL_ROW row;
+  uint32_t nfields = mysql_num_fields( result );
+  while ( (row = mysql_fetch_row(result)) != NULL ) {
+    Result tmpresult;
+    uint64_t * lengths = mysql_fetch_lengths( result );
+    
+    for ( uint32_t i = 0; i < nfields; ++i ) {
+      tmpresult.push_back( std::string( row[i], lengths[i] ) );
+    }
+    
+    results.push_back( tmpresult );
+  }
+  
+  mysql_free_result( result );
+  LOG_TRACE( "MysqlEngine::query(SQLCMD:'%s') : ResultCount:%lu .\n", sqlcmd.c_str(), results.size() );
+  
+  return true;
 }
 
 bool MysqlEngine::update( const std::string & sqlcmd, uint32_t & naffected ) {
-	int32_t rc = 0;
-
-	rc = mysql_real_query( m_DBHandler, sqlcmd.data(), sqlcmd.size() );
-	if ( rc != 0 ) {
-		LOG_ERROR( "MysqlEngine::update(SQLCMD:'%s') : Result:%d, Error:(%d,'%s') .\n",
-			sqlcmd.c_str(), rc, mysql_errno(m_DBHandler), mysql_error(m_DBHandler) );
-		return false;
-	}
-
-	// 获取影响的行数
-	naffected = mysql_affected_rows( m_DBHandler );
-	LOG_TRACE( "MysqlEngine::update(SQLCMD:'%s') : AffectedRows:%u .\n", sqlcmd.c_str(), naffected );
-
-	return true;
+  int32_t rc = 0;
+  
+  rc = mysql_real_query( m_DBHandler, sqlcmd.data(), sqlcmd.size() );
+  if ( rc != 0 ) {
+    LOG_ERROR( "MysqlEngine::update(SQLCMD:'%s') : Result:%d, Error:(%d,'%s') .\n",
+      sqlcmd.c_str(), rc, mysql_errno(m_DBHandler), mysql_error(m_DBHandler) );
+		
+    return false;
+  }
+  
+  // 获取影响的行数
+  naffected = mysql_affected_rows( m_DBHandler );
+  LOG_TRACE( "MysqlEngine::update(SQLCMD:'%s') : AffectedRows:%u .\n", sqlcmd.c_str(), naffected );
+  
+  return true;
 }
 
 bool MysqlEngine::remove( const std::string & sqlcmd, uint32_t & naffected ) {
-	int32_t rc = 0;
-
-	rc = mysql_real_query( m_DBHandler, sqlcmd.data(), sqlcmd.size() );
-	if ( rc != 0 ) {
-		LOG_ERROR( "MysqlEngine::remove(SQLCMD:'%s') : Result:%d, Error:(%d,'%s') .\n",
-			sqlcmd.c_str(), rc, mysql_errno(m_DBHandler), mysql_error(m_DBHandler) );
-		return false;
-	}
-
-	// 获取影响的行数
-	naffected = mysql_affected_rows( m_DBHandler );
-	LOG_TRACE( "MysqlEngine::remove(SQLCMD:'%s') : AffectedRows:%u .\n", sqlcmd.c_str(), naffected );
-
-	return true;
+  int32_t rc = 0;
+  
+  rc = mysql_real_query( m_DBHandler, sqlcmd.data(), sqlcmd.size() );
+  if ( rc != 0 ) {
+    LOG_ERROR( "MysqlEngine::remove(SQLCMD:'%s') : Result:%d, Error:(%d,'%s') .\n",
+      sqlcmd.c_str(), rc, mysql_errno(m_DBHandler), mysql_error(m_DBHandler) );
+    return false;
+  }
+  
+  // 获取影响的行数
+  naffected = mysql_affected_rows( m_DBHandler );
+  LOG_TRACE( "MysqlEngine::remove(SQLCMD:'%s') : AffectedRows:%u .\n", sqlcmd.c_str(), naffected );
+  
+  return true;
 }
