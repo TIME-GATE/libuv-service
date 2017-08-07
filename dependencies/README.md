@@ -33,8 +33,26 @@ sudo make install
 ```
 
 #### 2 PROTOBUFF
-略
+```text
+
+git clone https://github.com/google/protobuf.git
+
+cd protobuf && ./configure
+
+make && make check
+
+sudo make install && sudo ldconfig
+
+```
 #### 3 交易所SDK
+```text
 略
-#### 4 REDIS
+```
+#### 4 MYSQL
+```text
 略
+```
+#### 5 REDIS
+```text
+略
+```
