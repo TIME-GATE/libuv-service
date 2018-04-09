@@ -11,7 +11,7 @@ int main(int argc, char ** argv){
     printf("###################### START SERVICE FAILED ######################\n");
   }
 
-  // 开启交易线程
+  // 开启第三方线程
   if(!server.connect()) {
     printf("###################### CONNECT FTP FAILED ######################\n");
   }

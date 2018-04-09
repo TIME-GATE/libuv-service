@@ -18,11 +18,11 @@ class IIOService {
     // 本地连接/监听
     int listen(const char *host, int port);
     
-    // 连接交易中心
+    // 连接到第三方
     int connect(const char *host, uint16_t port, int32_t seconds);
 
-    // 停止本地服务/交易中心服务连接
-    //void shutdown();
+    // 停止本地服务/第三方服务连接
+    void shutdown();
 
 };
 
