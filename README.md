@@ -2,33 +2,32 @@
 
 ```text
   业余时间用C++封装libuv写的一个后端服务，包含:
-1、通信协议: TCP
-2、数据协议: protobuff、JSON(TUDO)
+1、通信协议: TCP, HTTP
+2、数据协议: protobuf、JSON(TUDO)
 3、数据库: mysql
-4、并发控制: 线程、进程 epoll 定时器 信号(TUDO)
+4、并发控制: 线程 epoll 定时器 信号
 ```
+
+--------------
 
 ### 二、项目结构
 
 ```text
-|____messages           # protobuf文件
+|____messages           # protobuf
 | |____README.md
 |____Makefile           # Make文件
 |____dependencies       # 依赖库
 | |____README.md
+| |____*.*
 |____README.md
 |____scripts            # 脚本
 | |____start_service.sh 
 | |____README.md
+| |____*.*
 |____doc                # 文档
 | |____README.md
 |____data               # 临时文件
-| |____traderDialogRsp.con
-| |____traderTradingDay.con
-| |____README.md
-| |____traderPrivate.con
-| |____traderPublic.con
-| |____traderQueryRsp.con
+| |____*.*
 |____autogen.sh
 |____src                # 源文件
 | |____database
@@ -36,28 +35,36 @@
 | | |____MysqlEngine.cpp
 | |____routes.h
 | |____test
-| | |____README.md
-| |____util
-| | |____README.md
+| | |____*.*
+| |____utils            # 工具类，如时间戳等
+| | |____timeutils.h
+| | |____timeutils.cpp
+| | |____*.*
 | |____io
 | | |____response.h
 | | |____response.cpp
 | | |____libuv.h
 | | |____libuv.cpp
 | | |____demo.cpp
+| | |____*.*
 | |____routes.cpp
-| |____a.out
 | |____sdk             # 第三方SDK
-| | |____libthostmduserapi.so
-| | |____ThostFtdcTraderApi.h
-| | |____ThostFtdcUserApiDataType.h
-| | |____ThostFtdcUserApiStruct.h
-| | |____error.dtd
-| | |____error.xml
-| | |____ChildThostFtdcTraderApi.h
-| | |____ThostFtdcMdApi.h
-| | |____libthosttraderapi.so
 | |____server.cpp
+| |____*.*
 ```
 
-### 三、性能测试（TUDO）
+--------------
+
+### 三、已完成
+- [x] 封装libuv通信层
+- [x] mysql引擎
+- [x] 信号signal
+
+--------------
+
+### 四、进行中
+
+- [x] 线程及线程池
+- [x] 任务队列
+- [x] mysql事务
+- [x] protobuf
