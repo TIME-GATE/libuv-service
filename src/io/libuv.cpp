@@ -27,20 +27,6 @@ int IIOService::listen(const char *host, int port) {
 }
 
 int IIOService::connect() {
-
-  printf("######## /home/zhang/Projects/libuv-service/data/trader ######### \n");
-  	
-	CThostFtdcTraderApi * createClient = CThostFtdcTraderApi::CreateFtdcTraderApi("/home/zhang/Projects/libuv-service/data/trader");
- 	MarketDataCollector mdCollector(createClient);
-  
-	createClient->RegisterSpi(&mdCollector);
-  createClient->RegisterFront("tcp://127.0.0.1:17001");
-  
-	createClient->SubscribePrivateTopic(THOST_TE_RESUME_TYPE);
-  createClient->SubscribePublicTopic(THOST_TE_RESUME_TYPE);
-  
-	createClient->Init();
-	createClient->Join();
 	
 	return 0;
 

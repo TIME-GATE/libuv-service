@@ -12,6 +12,7 @@ typedef std::vector<std::string>        Result;
 typedef std::vector<Result>             Results;
 
 class MysqlEngine {
+  
 public :
 	MysqlEngine(const std::string & host, uint16_t port);
 	~MysqlEngine();

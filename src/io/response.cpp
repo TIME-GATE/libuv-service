@@ -14,22 +14,24 @@ void Response::write(uv_write_t *req, int status) {
 
 void Response::send(uv_stream_t *client, ssize_t nread, const uv_buf_t *buff) {
   if(nread < 0) {
-    if(nread != UV_EOF) fprintf(stderr, "read error %s \n", uv_err_name(nread));
+    if(nread != UV_EOF) {
+      fprintf(stderr, "read error %s \n", uv_err_name(nread));
+    }
+
     uv_close((uv_handle_t*) client, NULL);
-  } else {
-		uv_write_t *req = (uv_write_t *) malloc(sizeof(uv_write_t));
+    return 
+  }
+	
+  uv_write_t *req = (uv_write_t *) malloc(sizeof(uv_write_t));
+  uv_buf_t wrbuf = uv_buf_init(buff, strlen(buff));
     
-    // 转发到交易中心 
-    Routes *route = new Routes();
-    char *futures_str = route->getCThostFtdcTraderApi();
-    uv_buf_t wrbuf = uv_buf_init(futures_str, strlen(futures_str));
-    
-    uv_write(req, client, &wrbuf, 1, Response::write);
-	}
+  uv_write(req, client, &wrbuf, 1, Response::write);
 
   printf("echo_read:%s\r\n", buff->base);
   
-  if(buff->base) free(buff->base);
+  if(buff->base) {
+    free(buff->base);
+  }
 
 }
 
