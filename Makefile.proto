@@ -1,0 +1,24 @@
+
+include $(ROOT)/Makefile.define
+
+# Protobuf Flags
+PROTOC_FLAG		= -I=$(PROTOTYPE_PATH)/ --cpp_out=$(PROTODEST_PATH)
+
+.PHONY: proto
+
+PROTO_FILES	= $(shell find $(PROTOTYPE_PATH)/ -type f -name "*.proto")
+PROTO_INCS	= $(subst $(PROTOTYPE_PATH),$(PROTODEST_PATH),$(patsubst %.proto,%.pb.h,$(PROTO_FILES)))
+PROTO_SRCS	:= $(subst $(PROTOTYPE_PATH),$(PROTODEST_PATH),$(patsubst %.proto,%.pb.cc,$(PROTO_FILES)))
+#ALL_PROTO_OBJECTS	= $(sort $(subst $(SRC_PATH),$(BUILD_PATH),$(patsubst %.cc,%.o,$(PROTO_SRCS))))
+
+ALL_GEN_SRCS	+= $(PROTO_SRCS)
+ALL_GEN_INCS	+= $(PROTO_INCS)
+
+# 生成协议
+proto: $(PROTO_INCS) $(PROTO_SRCS)
+
+$(PROTODEST_PATH)/%.pb.h: $(PROTOTYPE_PATH)/%.proto
+	$(PROTOC) $(PROTOC_FLAG) $^
+
+$(PROTODEST_PATH)/%.pb.cc: $(PROTOTYPE_PATH)/%.proto
+	$(PROTOC) $(PROTOC_FLAG) $^

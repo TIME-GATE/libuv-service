@@ -27,7 +27,12 @@ int IIOService::listen(const char *host, int port) {
 }
 
 int IIOService::connect() {
-	
+  // TODO: 
 	return 0;
-
 }
+
+int IIOService::shutdown() {
+  // TODO
+  return 0;
+}
+

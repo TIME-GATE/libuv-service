@@ -1,0 +1,51 @@
+
+#
+# 通用定义
+#
+
+CC		= gcc
+CXX		= g++
+LINKER	= $(CXX)
+AR		= ar
+RM		= rm
+MKDIR	= mkdir
+COPY	= cp
+LINK	= ln
+MAKE 	= make
+ARFLAGS	= crs
+RMFLAGS	= -rf
+PROTOC	= protoc
+TOUCH 	= touch
+
+OS 		= $(shell uname)
+
+CC_VERSION			  = $(shell gcc --version | head -n1 | cut -d ' ' -f 3)
+CC_MAJOR_VERSION	= $(shell gcc --version | head -n1 | cut -d ' ' -f 3 | cut -d '.' -f 1)
+CC_MINOR_VERSION	= $(shell gcc --version | head -n1 | cut -d ' ' -f 3 | cut -d '.' -f 2)
+
+#
+# 项目目录定义
+#
+BIN_PATH		= $(ROOT)/bin
+LIB_PATH		= $(ROOT)/lib
+SRC_PATH		= $(ROOT)/src
+BUILD_PATH		= $(ROOT)/build
+INCLUDE_PATH	= $(ROOT)/include
+PROTOTYPE_PATH	= $(ROOT)/protocol
+PROTODEST_PATH	= $(SRC_PATH)/message
+
+#
+# 全局变量
+#
+
+ALL_SRCS		?=
+ALL_OBJS		?=
+ALL_DEPS		?=
+
+ALL_GEN_SRCS	?=
+ALL_GEN_INCS	?=
+
+#
+#
+#
+VERSION_FILE 	?= $(SRC_PATH)/base/version.h
