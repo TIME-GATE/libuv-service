@@ -5,11 +5,15 @@
 
 #include "timeutils.h"
 
+int32_t g_ModifyTimestamp = 0;
+
 namespace Utils {
 
-Clock::Clock(const char * now) : m_Timestamp(Timeutils::getTimestamp(now)) {}
+Clock::Clock(const char * now) 
+  : m_Timestamp(TimeUtils::getTimestamp(now)) {}
 
-Clock::Clock(time_t now, uint32_t interval) : m_Timestamp(now+interval) {}
+Clock::Clock(time_t now, uint32_t interval) 
+  : m_Timestamp(now+interval) {}
 
 TimeUtils::TimeUtils() {
   m_Timestamp = 0;
@@ -18,7 +22,7 @@ TimeUtils::TimeUtils() {
 
 TimeUtils::TimeUtils(time_t t) {
   m_Timestamp = t;
-  std::memset(&m_Timestamp, &m_TimeStruct);
+  ::localtime_r(&m_Timestamp, &m_TimeStruct);
 }
 
 TimeUtils::TimeUtils(struct tm * tm) {
@@ -26,9 +30,9 @@ TimeUtils::TimeUtils(struct tm * tm) {
   m_Timestamp = ::mktime(tm);
 }
 
-time_t Timeutils::time() {
+time_t TimeUtils::time() {
   time_t now = 0;
-  struct timeval vl;
+  struct timeval tv;
 
   if(::gettimeofday(&tv, NULL) == 0) {
     now = tv.tv_sec;
@@ -43,10 +47,10 @@ time_t Timeutils::time() {
 }
 
 int64_t TimeUtils::now() {
-  int46_t now = 0;
+  int64_t now = 0;
   struct timeval tv;
 
-  if(::gettimeofdata(&tv, NULL) ==0) {
+  if(::gettimeofday(&tv, NULL) ==0) {
     now = tv.tv_sec*1000+tv.tv_usec/1000;
 
 #if defined(__DEBUG__)
@@ -64,7 +68,31 @@ int32_t TimeUtils::sleep(uint64_t mseconds) {
   tv.tv_sec = mseconds/1000;
   tv.tv_usec = (mseconds%1000)*1000;
 
-  return ::select(0, NULL, NULL, NULL, &tv)
+  return ::select(0, NULL, NULL, NULL, &tv);
 }
 
+time_t TimeUtils::getTimestamp() {
+  if(m_Timestamp == 0) {
+    m_Timestamp = TimeUtils::time();
+  }
+
+  return m_Timestamp;
+}
+
+time_t TimeUtils::getTimestamp(const char * str) {
+  struct tm t;
+  char * matched = NULL;
+
+  std::memset(&t, 0, sizeof(tm));
+  matched = strptime(str, "%Y-%m-%d %H:%M:%S", &t);
+
+  return matched != NULL ? mktime(&t) : 0;
+}
+
+}
+
+int main(int argc, char ** argv) {
+  Utils::TimeUtils::sleep(1000);
+  std::printf( "   -d                  : daemonize\n" );
+  return 0;
 }

@@ -1,4 +1,4 @@
-#ifdef __SRC_UTLIS_TIME_H__
+#ifndef __SRC_UTLIS_TIME_H__
 #define __SRC_UTLIS_TIME_H__
 
 #include<time.h>
@@ -32,6 +32,10 @@ class TimeUtils {
     TimeUtils(time_t t);
     TimeUtils(struct tm * tm);
   
+  public :
+    time_t getTimestamp();
+    struct tm * getTimeStruct();
+  
   public : 
 
     // 当前秒数
@@ -42,6 +46,9 @@ class TimeUtils {
     
     // 毫秒
     static int32_t sleep(uint64_t mseconds);
+
+    // 时间戳
+    static time_t getTimestamp(const char * str);
 
   private : 
     time_t m_Timestamp;
