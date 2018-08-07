@@ -10,33 +10,33 @@ namespace Utils {
 
 class Clock {
 
-  public : 
+  public: 
     // 绝对时间
     Clock(const char * now);
 
     // 相对时间
     Clock(time_t now, uint32_t interval);
   
-  public :
+  public:
     // 转换为时间戳
     time_t convert() const { return m_Timestamp; }
   
-  private :
+  private:
     time_t m_Timestamp;
 };
 
 class TimeUtils {
 
-  public : 
+  public: 
     TimeUtils();
     TimeUtils(time_t t);
     TimeUtils(struct tm * tm);
   
-  public :
+  public:
     time_t getTimestamp();
     struct tm * getTimeStruct();
   
-  public : 
+  public: 
 
     // 当前秒数
     static time_t time();
@@ -50,7 +50,7 @@ class TimeUtils {
     // 时间戳
     static time_t getTimestamp(const char * str);
 
-  private : 
+  private: 
     time_t m_Timestamp;
     struct tm m_TimeStruct;
 };

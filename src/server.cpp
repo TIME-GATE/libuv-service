@@ -53,17 +53,17 @@ int main(int argc, char ** argv){
   printf("###################### BEGIN START SERVICE ######################\n");
   
   IIOService server;
-  g_ServerRunStatus = server.listen("0.0.0.0", 7000)
+  g_ServerRunStatus = server.listen("0.0.0.0", 7000);
   
   // 开启线程服务
   while (g_ServerRunStatus) {
-    Utils::TimeUtils::sleep(100)
+    Utils::TimeUtils::sleep(100);
   }
   
   printf("###################### START SERVICE FAILED ######################\n");
 
   // 销毁
-  finalize(module.c_str())
+  finalize(module.c_str());
 
   return 0;
 }

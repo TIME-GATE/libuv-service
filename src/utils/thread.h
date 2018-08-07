@@ -57,11 +57,11 @@ class IThread {
 
 class IWorkThread : public IThread {
 
-  public :
+  public:
     IWorkThread();
     virtual ~IWorkThread();
 
-  public :
+  public:
     // 开启回调
     virtual bool onStart() = 0;
 
@@ -74,7 +74,7 @@ class IWorkThread : public IThread {
     // 停止回调
     virtual void onStop() = 0;
   
-  public :
+  public:
 
     // 提交任务
     bool post(int32_t type, void * task);
@@ -82,12 +82,12 @@ class IWorkThread : public IThread {
     // 清理队列
     void cleanup();
 
-  private :
+  private:
 
     // 处理业务
     void onExecute();
 
-  private :
+  private:
 
     struct Task {
       int32_t type;

@@ -6,7 +6,7 @@
 #include <stdint.h>
 
 // UnorderedMap定义
-#if ( __GUNC__ < 4 || __GNUC__ == 4 && __GNUC_MINOR__ < 1 )
+#if (__GUNC__ < 4 || __GNUC__ == 4 && __GNUC_MINOR__ < 1)
 #include <map>
 #define UnorderedMap std::map
 #else
@@ -15,8 +15,8 @@
 #endif
 
 // 分支预测
-#define likely(x)       __builtin_expect( (x), 1 )
-#define unlikely(x)     __builtin_expect( (x), 0 )
+#define likely(x)       __builtin_expect((x), 1)
+#define unlikely(x)     __builtin_expect((x), 0)
 
 // 全局事件修正
 extern int32_t g_ModifyTimestamp;
