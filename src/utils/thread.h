@@ -21,16 +21,25 @@ class IThread {
     virtual void onStop() = 0;
 
   public :
+    // 开启
     bool start();
+
+    // 停止
     void stop();
 
+    // ID
     pthread_t id() const { return pthread_t id; }
+    
+    // 运行中
     bool isRunnning() const { return m_Status == eRunning; }
 
+    // 分离
     void setDetach() { m_IsDetach = true; }
+
+    //
     void setStackSize(uint32_t size) { m_StackSize = size; }
 
-    static book check(pthread_t id);
+    static bool check(pthread_t id);
 
   private :
     void notify();
