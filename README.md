@@ -72,3 +72,25 @@
 - [x] mysql事务
 - [x] protobuf
 
+
+### 运行
+
+* server
+```
+./server.o
+
+```
+
+![image](http://github.com/TIME-GATE/libuv-service/blob/master/doc/liuv-server.png)
+
+* client
+
+```
+node scripts/net_client.js
+```
+
+![image](http://github.com/TIME-GATE/libuv-service/blob/master/doc/node-client.png)
+
+
+
+
