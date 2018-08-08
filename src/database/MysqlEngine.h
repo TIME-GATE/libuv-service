@@ -13,11 +13,11 @@ typedef std::vector<Result>             Results;
 
 class MysqlEngine {
   
-public :
+public:
 	MysqlEngine(const std::string & host, uint16_t port);
 	~MysqlEngine();
 
-public :
+public:
 	// 选择数据库
   void selectdb( const std::string & database );
 
@@ -27,7 +27,7 @@ public :
   // 设置访问权限
   void setToken( const std::string & user, const std::string & passwd );
 
-public :
+public:
   // 初始化
   bool initialize();
 
@@ -52,14 +52,14 @@ public :
 	// 删除
   bool remove( const std::string & sqlcmd, uint32_t & naffected );
 
-private :
+private:
   enum {
     eMysqlEngine_ConnectTimeout        = 5,    // 连接超时时间
     eMysqlEngine_ReadTimeout           = 5,    // 读超时时间
     eMysqlEngine_WriteTimeout          = 5,    // 写超时时间
   };
 
-private :
+private:
   std::string         m_Host;         // 主机地址
   uint16_t            m_Port;         // 端口号
   std::string         m_Username;     // 用户名
