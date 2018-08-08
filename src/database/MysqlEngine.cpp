@@ -186,8 +186,3 @@ bool MysqlEngine::remove(const std::string & sqlcmd, uint32_t & naffected) {
   
   return true;
 }
-
-
-int main(int argc, char ** argv) {
-  return 0;
-}

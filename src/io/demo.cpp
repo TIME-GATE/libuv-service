@@ -28,9 +28,9 @@ void echo_read(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf) {
             fprintf(stderr, "Read error %s\n", uv_err_name(nread));  
         uv_close((uv_handle_t*) client, NULL);  
     } else if (nread > 0) {  
-        /*uv_write_t *req = (uv_write_t *) malloc(sizeof(uv_write_t)); 
+        uv_write_t *req = (uv_write_t *) malloc(sizeof(uv_write_t)); 
         uv_buf_t wrbuf = uv_buf_init(buf->base, nread); 
-        uv_write(req, client, &wrbuf, 1, echo_write);*/  
+        uv_write(req, client, &wrbuf, 1, echo_write); 
     }  
       
     printf("echo_read:%s\r\n",buf->base);  
@@ -75,4 +75,5 @@ int main() {
         return 1;  
     }  
     return uv_run(loop, UV_RUN_DEFAULT);  
+    return 0;
 } 

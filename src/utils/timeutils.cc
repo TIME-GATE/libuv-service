@@ -90,11 +90,3 @@ time_t TimeUtils::getTimestamp(const char * str) {
 }
 
 }
-
-int main(int argc, char ** argv) {
-  for(int i = 0; i <= 100; i++) {
-    Utils::TimeUtils::sleep(1000);
-    std::printf( "sleep %d \n", i);
-  }
-  return 0;
-}

@@ -1,9 +1,13 @@
+#ifndef __LIBUV_IO_RESPONSE__
+#define __LIBUV_IO_RESPONSE__
+
 #include <cassert>
-#include "libuv.h"
 #include <vector>
+#include <stdlib.h>
 #include <uv.h>
 
-using namespace std;
+#include "libuv.h"
+
 
 // 处理层
 class Response {
@@ -29,8 +33,8 @@ class Response {
     
   public : 
   
-    // 事件句柄
-    static uv_loop_t *loop;
+    // 句柄
+    static uv_loop_t * loop;
 
     // 服务
     static uv_tcp_t server;
@@ -43,3 +47,4 @@ class Response {
 
 };
 
+#endif

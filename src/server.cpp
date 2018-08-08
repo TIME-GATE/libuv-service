@@ -4,7 +4,7 @@
 #include "./utils/timeutils.h"
 
 /* 全局选项 0: 退出 1: 运行 2: 重新加载 3: 刷新日志 */
-int g_ServerRunStatus = 0
+int g_ServerRunStatus = 0;
 
 static void signal_handle(int signo);
 static void initialize(const char * module);
@@ -32,15 +32,15 @@ void initialize(const char * module) {
 
   // 信号初始化
   signal(SIGPIPE, SIG_IGN);
-  signal(SIGINT, signal_handle)
-  signal(SIGHUP, signal_handle)
-  signal(SIGTERM, signal_handle)
-  signal(SIGUSR1, signal_handle)
+  signal(SIGINT, signal_handle);
+  signal(SIGHUP, signal_handle);
+  signal(SIGTERM, signal_handle);
+  signal(SIGUSR1, signal_handle);
 
   // TODO: 加载系统配置
 }
 
-void finalize(const chat * module) {
+void finalize(const char * module) {
   // TODO: 卸载系统配置
 }
 

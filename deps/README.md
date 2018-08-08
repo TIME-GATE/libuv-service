@@ -2,6 +2,7 @@
 
 #### 1 LIBUV
 
+* unix
 ```text
 sudo apt-get install automake
 
@@ -16,6 +17,15 @@ sh autogen.sh
 make && make check
 
 sudo make install
+
+```
+
+* OS
+
+```
+brew install --HEAD libuv
+
+g++ -luv server.cpp
 ```
 
 #### 2 PROTOBUFF
@@ -32,20 +42,22 @@ sudo make install && sudo ldconfig
 
 ```
 
-#### 3 交易所SDK
+#### 3 MYSQL
 
 ```text
 略
 ```
 
-#### 4 MYSQL
+#### 4 LEVELDB
 
 ```text
 略
 ```
 
-#### 5 REDIS
+#### 5 test
 
-```text
-略
+```
+g++ -luv src/server.cpp src/io/libuv.cpp src/utils/timeutils.cc src/io/response.cpp -o server.o
+
+./server.o
 ```
