@@ -57,7 +57,7 @@ sudo make install && sudo ldconfig
 #### 5 test
 
 ```
-g++ -luv src/server.cpp src/io/libuv.cpp src/utils/timeutils.cc src/io/response.cpp -o server.o
+g++ -luv src/server.cc src/io/libuv.cc src/utils/timeutils.cc src/io/response.cc -o server.o
 
 ./server.o
 ```

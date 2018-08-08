@@ -1,12 +1,14 @@
 ### 一、简介
 
+&nbsp;&nbsp;&nbsp;&nbsp;基于Node底层网络库libuv写的一个TCP服务，包含如下功能:
 ```text
-  业余时间用C++封装libuv写的一个后端服务，包含:
-1、通信协议: TCP, HTTP
-2、数据协议: protobuf、JSON(TUDO)
-3、数据库: mysql
-4、并发控制: 线程 epoll 定时器 信号
+1、基于libuv编写底层通信框架
+2、基于pthread编写线程安全管理模块，如线程池等
+3、封装mysql、leveldb、protobuf等数据通信中间件
+4、其他常用模块,如共享内存块、事务、日志等
 ```
+
+逐步完善中...
 
 --------------
 
@@ -59,12 +61,14 @@
 - [x] 封装libuv通信层
 - [x] mysql引擎
 - [x] 信号signal
+- [x] 线程
 
 --------------
 
 ### 四、进行中
 
-- [x] 线程及线程池
+- [x] 线程池
 - [x] 任务队列
 - [x] mysql事务
 - [x] protobuf
+
