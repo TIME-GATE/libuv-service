@@ -1,6 +1,6 @@
 #include <string.h>
 
-// #include "base/base.h"
+#include "base/base.h"
 #include "mysqlengine.h"
 
 MysqlEngine::MysqlEngine(const std::string & host, uint16_t port)

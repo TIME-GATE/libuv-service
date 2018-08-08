@@ -2,6 +2,7 @@
 
 #include "./io/libuv.h"
 #include "./utils/timeutils.h"
+// #include "./base/base.h"
 
 /* 全局选项 0: 退出 1: 运行 2: 重新加载 3: 刷新日志 */
 int g_ServerRunStatus = 0;
@@ -54,12 +55,14 @@ int main(int argc, char ** argv){
   
   IIOService server;
   g_ServerRunStatus = server.listen("0.0.0.0", 7000);
-  
+
   // 开启线程服务
   while (g_ServerRunStatus) {
     Utils::TimeUtils::sleep(100);
   }
   
+  // LOG_INFO("###################### START SERVICE FAILED ######################\n");
+
   printf("###################### START SERVICE FAILED ######################\n");
 
   // 销毁
