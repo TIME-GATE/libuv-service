@@ -81,7 +81,7 @@
 
 ```
 
-![image](http://github.com/TIME-GATE/libuv-service/blob/master/doc/liuv-server.png)
+![image](https://github.com/TIME-GATE/libuv-service/blob/master/doc/libuv-server.png)
 
 * client
 
@@ -89,7 +89,7 @@
 node scripts/net_client.js
 ```
 
-![image](http://github.com/TIME-GATE/libuv-service/blob/master/doc/node-client.png)
+![image](https://github.com/TIME-GATE/libuv-service/blob/master/doc/node-client.png)
 
 
 
