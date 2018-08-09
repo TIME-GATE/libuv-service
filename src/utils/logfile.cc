@@ -907,7 +907,7 @@ int main(int argc, char ** argv) {
 
   int32_t i = 0;
 
-  Utils::LogFile logger(".", "libuv.server.log");
+  Utils::LogFile logger("./data", "libuv.server.log");
 
   if(!logger.open()) {
     printf("open LogFile failed .\n");
