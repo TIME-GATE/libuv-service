@@ -44,7 +44,46 @@ int32_t get_date(int64_t & now, struct tm & tm_now) {
 }
 
 void fmtprefix(std::string & prefix, const char * format, uint8_t level, int64_t now, struct tm * tm_now) {
+  const char *loglevel_desc[] = {
+    "Fatal", "Error", "Warn",
+    "Info", "Trace", "Debug"
+  };
 
+  int64_t mseconds = now % 1000;
+
+  for(; *format; ++format) {
+    if(*format != '%') {
+      prefix += *format;
+      continue;
+    }
+
+    switch (*++format) {
+      case '\0' :
+        --format;
+        break;
+
+      case 'l' :
+      case 'L' :
+        prefix += loglevel_desc[level-1];
+        break;
+      case 't' :
+        {
+          char date[ 32 ];
+          strftime(date, 31, "%F %T", tm_now);
+          prefix += date;
+        }
+        break;
+      case 'T' :
+        {
+          char date[32];
+          strftime(date, 31, "%F %T", tm_now);
+          prefix += date;
+          snprintf(date, 16, "%03lld", mseconds);
+          prefix += date;
+        }
+        break;
+      }
+  }
 }
 
 ConfigSection::ConfigSection(char * section, int32_t length) {
@@ -211,6 +250,7 @@ void ConfigFile::parse(char * filecontent, int32_t filesize) {
 
 const char * ConfigFile::getValue(const char * section, const char * key) {
   SectionMap::iterator result = m_Sections.find(section);
+
   if(result != m_Sections.end()) {
     ConfigSection * _section = result->second;
 
@@ -513,15 +553,17 @@ void Logger::append(const std::string & logline) {
   char * data = const_cast<char *>(logline.c_str());
 
   if (m_Buffer->offsets + size >= m_Size) {
-    this->flush();
+     this->flush();
   }
 
-  if (size >= m_Size) {
-    ::write(m_Fd, data, size);
-  } else {
-    std::memcpy(m_Buffer->buffer+m_Buffer->offsets, data, size);
-    m_Buffer->offsets += size;
-  }
+  ::write(m_Fd, data, size);
+
+  // if (size >= m_Size) {
+  //   ::write(m_Fd, data, size);
+  // } else {
+  //   std::memcpy(m_Buffer->buffer + m_Buffer->offsets, data, size);
+  //   m_Buffer->offsets += size;
+  // }
 }
 
 void Logger::rotate() {
@@ -862,19 +904,28 @@ bool CSemlock::isOwner() const {
 #endif
 
 int main(int argc, char ** argv) {
-  Utils::ConfigFile config( "/Users/dreamboad/Test/result.txt" );
 
-  config.open();
-  const char * value = NULL;
+  int32_t i = 0;
 
-  value = config.getValue("pager", "diff" );
-  if ( value == NULL ) {
-    printf("not found .\n");
-  } else {
-    printf("%s\n", value);
+  Utils::LogFile logger(".", "libuv.server.log");
+
+  if(!logger.open()) {
+    printf("open LogFile failed .\n");
+    return -1;
   }
 
-  config.close();
+  printf("open LogFile success .\n");
+
+  logger.setMaxSize(5*1024);
+
+  srand(time(NULL));
+
+  for(i = 1; i < 5; ++i) {
+    uint8_t level = 1 + rand()%5;
+    logger.print(level, "test logfile %d .\n", i);
+  }
   
+  logger.close();
+
   return 0;
 }
