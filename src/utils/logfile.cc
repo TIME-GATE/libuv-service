@@ -25,6 +25,7 @@
 
 #include "logfile.h"
 #include "hashfunc.h"
+#include "timeutils.h"
 
 #define TEST_UNIT    0
 
@@ -920,9 +921,10 @@ int main(int argc, char ** argv) {
 
   srand(time(NULL));
 
-  for(i = 1; i < 5; ++i) {
+  for(i = 1; i < 10; ++i) {
+    Utils::TimeUtils::sleep(1000);
     uint8_t level = 1 + rand()%5;
-    logger.print(level, "test logfile %d .\n", i);
+    logger.print(level, "process two test logfile %d .\n", i);
   }
   
   logger.close();

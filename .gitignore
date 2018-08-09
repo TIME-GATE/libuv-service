@@ -1,4 +1,4 @@
 .tmp
-a.out
+*.out
 server.o
 *libuv.server.log*
