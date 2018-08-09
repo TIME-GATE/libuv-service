@@ -1,5 +1,5 @@
-#ifndef __SRC_UTILS_FILE_H__
-#define __SRC_UTILS_FILE_H__
+#ifndef __SRC_UTILS_LOGFILE_H__
+#define __SRC_UTILS_LOGFILE_H__
 
 #include <map>
 #include <string>
@@ -10,9 +10,34 @@
 
 namespace Utils {
 
-class ConfigSection;
-class ConfigFile {
+class ConfigSection {
+
   public:
+
+    ConfigSection(char * section, int32_t length);
+    ~ConfigSection();
+
+  public:
+
+    bool addItem(char * key, int32_t nkey, cahr * value, int32_t nvalue);
+
+    const char * getSection();
+
+    const char * getValue(const char * key);
+
+    static char * trim(char * data, int32_t & len);
+  
+  private:
+
+    std::string m_Sections;
+
+    std::map<std::string, std::string>  m_AllItems;
+};
+
+class ConfigFile {
+
+  public:
+
     ConfigFile(const char * path);
     ~ConfigFile();
     
@@ -46,9 +71,107 @@ class ConfigFile {
 };
 
 
-class Logger;
-class CShmem;
-class CSemlock;
+class Logger {
+
+  public:
+
+    Logger(LogFile * file);
+    ~Logger();
+
+    static int32_t getToday();
+
+    static size_t getBlockSize();
+
+  public:
+
+    void initialize(int32_t today = 0, bool isinit = true);
+
+    ssize_t getFileSize();
+
+    void getLogPath(char * path);
+
+    void getIndexPath(chat * path);
+
+    void setDate(int32_t today);
+
+    int8_t getLevel() const { return m_Buffer->minlevel; }
+
+    int32_t getOffset() const { return m_Buffer->offsets; }
+
+    void setSizeLimit( size_t size) { m_Buffer-sizelimit = size; }
+
+  public:
+
+    void open();
+
+    void flush(bool sync = false);
+
+    void append(const std::string & logline);
+
+    void rotate();
+
+  private:
+    LogFile * m_LogFile;
+
+    int32_t m_Fd;
+
+    size_t m_Size;
+
+    Buffer * m_Buffer;
+  
+};
+
+class CShmem {
+
+  public:
+    CShmem(cosnt char * keyfile);
+    ~CShmem();
+
+  public:
+
+    bool alloc(size_t size);
+
+    void free();
+
+    void * link();
+
+    void unlink(void * ptr);
+
+    bool isOwner() const;
+  
+  private:
+
+    bool m_IsOwner;
+
+    int32_t m_ShmId;
+
+    stdLLstring m_Keyfile;
+};
+
+class CSemlock {
+
+  public:
+    CSemlock(cosnt char * keyfile);
+    ~CSemlock();
+
+  public:
+    bool init();
+
+    void final();
+
+    void lock();
+
+    void unlock();
+
+    bool isOwner() const;
+
+  private:
+    bool m_IsOwner;
+
+    int32_t m_SemId;
+
+    std::string m_Keyfile;
+};
 
 class LogFile {
   public:
@@ -79,6 +202,7 @@ class LogFile {
     void setMaxSize(size_t size);
 
   private:
+
     friend class Logger;
 
     void print(uint8_t level, int32_t today, const std::string & head, const std::string & body);
@@ -92,10 +216,15 @@ class LogFile {
     CShmem * getBlock() const { return m_Block; }
 
   private:
+
     std::string m_Path;
+    
     std::string m_Module;
-    CShmem * m_Block;
+    
+    CShmem * m_Block; 
+    
     CSemlock * m_Lock;
+    
     Logger * m_Logger;
 };
 
