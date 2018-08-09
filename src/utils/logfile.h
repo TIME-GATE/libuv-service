@@ -10,6 +10,28 @@
 
 namespace Utils {
 
+class Logger;
+class CShmem;
+class CSemlock;
+
+struct Buffer {
+  int32_t     date;       // 记录日志的日期
+  int32_t     index;      // 记录当前日期下日志文件的索引
+  uint8_t     minlevel;   //
+  size_t      sizelimit;  // 文件大小限制
+  int32_t     offsets;    // 日志缓存的偏移量
+  char        buffer[0];  // 日志缓存
+
+  Buffer() {
+    date        = 0;
+    index       = 0;
+    minlevel    = 0;
+    sizelimit   = 0;
+    offsets     = 0;
+  };
+
+};
+
 class ConfigSection {
 
   public:
@@ -19,7 +41,7 @@ class ConfigSection {
 
   public:
 
-    bool addItem(char * key, int32_t nkey, cahr * value, int32_t nvalue);
+    bool addItem(char * key, int32_t nkey, char * value, int32_t nvalue);
 
     const char * getSection();
 
@@ -29,7 +51,7 @@ class ConfigSection {
   
   private:
 
-    std::string m_Sections;
+    std::string m_Section;
 
     std::map<std::string, std::string>  m_AllItems;
 };
@@ -42,10 +64,12 @@ class ConfigFile {
     ~ConfigFile();
     
   public:
+
     bool open();
     void close();
     
   public:
+
     bool get(const char * section, const char * key, bool & value);
     bool get(const char * section, const char * key, float & value);
     bool get(const char * section, const char * key, int8_t & value);
@@ -58,73 +82,25 @@ class ConfigFile {
     bool get(const char * section, const char * key, uint64_t & value);
     bool get(const char * section, const char * key, std::string & value);
 
-  private:
+  public:
+
     void parse(char * filecontent, int32_t filesize);
 
     const char * getValue(const char * section, const char * key);
 
   private:
+
     typedef std::map<std::string, ConfigSection *> SectionMap;
     std::string m_File;
     SectionMap m_Sections;
     
 };
 
-
-class Logger {
-
-  public:
-
-    Logger(LogFile * file);
-    ~Logger();
-
-    static int32_t getToday();
-
-    static size_t getBlockSize();
-
-  public:
-
-    void initialize(int32_t today = 0, bool isinit = true);
-
-    ssize_t getFileSize();
-
-    void getLogPath(char * path);
-
-    void getIndexPath(chat * path);
-
-    void setDate(int32_t today);
-
-    int8_t getLevel() const { return m_Buffer->minlevel; }
-
-    int32_t getOffset() const { return m_Buffer->offsets; }
-
-    void setSizeLimit( size_t size) { m_Buffer-sizelimit = size; }
-
-  public:
-
-    void open();
-
-    void flush(bool sync = false);
-
-    void append(const std::string & logline);
-
-    void rotate();
-
-  private:
-    LogFile * m_LogFile;
-
-    int32_t m_Fd;
-
-    size_t m_Size;
-
-    Buffer * m_Buffer;
-  
-};
-
 class CShmem {
 
   public:
-    CShmem(cosnt char * keyfile);
+
+    CShmem(const char * keyfile);
     ~CShmem();
 
   public:
@@ -145,16 +121,18 @@ class CShmem {
 
     int32_t m_ShmId;
 
-    stdLLstring m_Keyfile;
+    std::string m_Keyfile;
 };
 
 class CSemlock {
 
   public:
-    CSemlock(cosnt char * keyfile);
+
+    CSemlock(const char * keyfile);
     ~CSemlock();
 
   public:
+
     bool init();
 
     void final();
@@ -166,6 +144,7 @@ class CSemlock {
     bool isOwner() const;
 
   private:
+
     bool m_IsOwner;
 
     int32_t m_SemId;
@@ -175,6 +154,7 @@ class CSemlock {
 
 class LogFile {
   public:
+
     enum {
       eLogLevel_Fatal = 1,        // 严重
       eLogLevel_Error = 2,        // 错误
@@ -186,7 +166,9 @@ class LogFile {
 
     LogFile(const char * path, const char * module);
     ~LogFile();
+
   public:
+
     bool open();
 
     void print(uint8_t level, const char * format, ...);
@@ -226,6 +208,61 @@ class LogFile {
     CSemlock * m_Lock;
     
     Logger * m_Logger;
+};
+
+class Logger {
+
+  public:
+
+    Logger(LogFile * file);
+    ~Logger();
+
+    static int32_t getToday();
+
+    static size_t getBlockSize();
+
+  public:
+
+    void initialize(int32_t today = 0, bool isinit = true);
+
+    ssize_t getFileSize();
+
+    void getLogPath(char * path);
+
+    void getIndexPath(char * path);
+
+    void setDate(int32_t today);
+
+    int32_t getDate() const { return m_Buffer->date; }
+
+    int8_t getLevel() const { return m_Buffer->minlevel; }
+
+    void setLevel(uint8_t level);
+
+    int32_t getOffset() const { return m_Buffer->offsets; }
+
+    void setSizeLimit( size_t size) { m_Buffer->sizelimit = size; }
+
+  public:
+
+    void open();
+
+    void flush(bool sync = false);
+
+    void append(const std::string & logline);
+
+    void rotate();
+
+  private:
+
+    LogFile * m_LogFile;
+
+    int32_t m_Fd;
+
+    size_t m_Size;
+
+    Buffer * m_Buffer;
+  
 };
 
 }
