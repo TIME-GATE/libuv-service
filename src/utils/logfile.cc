@@ -452,10 +452,10 @@ bool CShmem::isOwner() const {
 /* Logger s*/
 
 Logger::Logger(LogFile * file)
-    : m_LogFile(file),
-      m_Fd(-1),
-      m_Size(0),
-      m_Buffer(NULL)
+  : m_LogFile(file),
+    m_Fd(-1),
+    m_Size(0),
+    m_Buffer(NULL)
 {}
 
 Logger::~Logger() {
@@ -524,10 +524,10 @@ void Logger::getLogPath(char * path) {
 }
 
 void Logger::getIndexPath(char * path) {
-    std::snprintf(path, PATH_MAX, "%s/%s-%d.%d.log",
-      m_LogFile->getPath(),
-      m_LogFile->getModule(),
-      m_Buffer->date, m_Buffer->index);
+  std::snprintf(path, PATH_MAX, "%s/%s-%d.%d.log",
+    m_LogFile->getPath(),
+    m_LogFile->getModule(),
+    m_Buffer->date, m_Buffer->index);
 }
 
 void Logger::setDate(int32_t today) {
@@ -608,11 +608,11 @@ void Logger::flush(bool sync) {
 }
 
 LogFile::LogFile(const char * path, const char * module)
-    : m_Path(path),
-      m_Module(module),
-      m_Block(NULL),
-      m_Lock(NULL),
-      m_Logger(NULL)
+  : m_Path(path),
+    m_Module(module),
+    m_Block(NULL),
+    m_Lock(NULL),
+    m_Logger(NULL)
 {}
 
 LogFile::~LogFile() {}
@@ -781,9 +781,9 @@ void LogFile::ensure_keyfiles_exist( char * file1, char * file2 ) {
 /* CSemlock */
 
 CSemlock::CSemlock( const char * keyfile )
-    : m_IsOwner(false),
-      m_SemId(-1),
-      m_Keyfile(keyfile)
+  : m_IsOwner(false),
+    m_SemId(-1),
+    m_Keyfile(keyfile)
 {}
 
 CSemlock::~CSemlock() {
