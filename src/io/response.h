@@ -43,7 +43,7 @@ class Response {
     static struct sockaddr_in addr;
 		
 		// 握手buffer最大值
-    static const int  default_backlog = 128;
+    static const int default_backlog = 128;
 
 };
 

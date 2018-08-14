@@ -69,7 +69,7 @@ void fmtprefix(std::string & prefix, const char * format, uint8_t level, int64_t
         break;
       case 't' :
         {
-          char date[ 32 ];
+          char date[32];
           strftime(date, 31, "%F %T", tm_now);
           prefix += date;
         }

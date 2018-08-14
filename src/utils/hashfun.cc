@@ -26,7 +26,7 @@ uint32_t HashFunction::elf(const char * key, size_t nkey) {
     if((x = hash & 0xF0000000L) != 0) {
       hash ^= (x >> 24);
       hash &= ~x;
-      }
+    }
   }
 
   return (hash & 0x7FFFFFFF);
