@@ -26,7 +26,8 @@ template <typename Key, typename Value>
       }
 
     public:
-      value_type find(const key_type &key) {
+    
+      value_type find(const key_type &key) { // TODO: 结合模板，这里返回值类型会造成bug
         HashTableIter rc = m_Table.find(key);
 
         if (rc == m_Table.end()) {
@@ -132,12 +133,6 @@ template <typename Key, typename Value>
 
 }
 
-class Demo {
-  
-public:
-  void operator()(int id, int year);
-};
-
 #endif
 
 int main() {
@@ -145,7 +140,7 @@ int main() {
 
   Cache cache(3);
 
-  for(int i = 1; i <= 5; i++) {
+  for (int i = 1; i <= 5; i++) {
     cache.insert(i, i * 5);
     printf("add cache is : %d\n", cache.find(i));
   }
@@ -157,3 +152,4 @@ int main() {
 
   return 1;
 }
+
