@@ -1,5 +1,5 @@
 
-include $(ROOT)/Makefile.define
+# include $(ROOT)/Makefile.define
 
 # 需要建立的目录
 PATHS		= bin lib include build \

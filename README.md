@@ -96,11 +96,10 @@ node scripts/net_client.js
 ![image](https://github.com/TIME-GATE/libuv-service/blob/master/doc/node-client.png)
 
 
-
-
 ### 五、备注
 
 ```
-c++11
+c++11 -std=c++11
 mac os 10.13.4
+gcc 4.2.1
 ```

@@ -64,50 +64,6 @@ class IThread {
 
 };
 
-class IWorkThread : public IThread {
-
-  public:
-    IWorkThread();
-    virtual ~IWorkThread();
-
-  public:
-    // 开启回调
-    virtual bool onStart() = 0;
-
-    // 空闲回调
-    virtual void onIdle() = 0;
-
-    // 任务回调
-    virtual void onTask(int32_t type, void * task) = 0;
-
-    // 停止回调
-    virtual void onStop() = 0;
-  
-  public:
-
-    // 提交任务
-    bool post(int32_t type, void * task);
-
-    // 清理队列
-    void cleanup();
-
-  private:
-
-    // 处理业务
-    void onExecute();
-
-  private:
-
-    struct Task {
-      int32_t type;
-      void * task;
-    }
-
-    pthread_mutex_t m_lock;
-    std::deque<Task> m_TaskQueue;
-
-};
-
 #if 0
 
 }
