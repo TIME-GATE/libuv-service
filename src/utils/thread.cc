@@ -77,7 +77,7 @@ bool IThread::check(pthread_t id) {
   return (rc != ESRCH && rc != EINVAL);
 }
 
-void *IThread::threadfunc(void *arg) {
+void * IThread::threadfunc(void * arg) {
   IThread *thread = (IThread *)arg;
 
   sigset_t mask;
@@ -102,3 +102,13 @@ void *IThread::threadfunc(void *arg) {
 
 }
 
+class CSyncServer : public Utils::IThread {
+  public:
+    virtual bool onStart();
+    virtual void onExecute();
+    virtual void onStop();
+};
+
+// int main() {
+//   CSyncServer cSyncServer = new CSyncServer();
+// }

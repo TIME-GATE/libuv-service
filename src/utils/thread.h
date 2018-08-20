@@ -11,47 +11,54 @@ namespace Utils {
 /* 基本线程 */
 class IThread {
 
-  public :
+  public:
+    IThread();
 
-    Ithread();
-    virtual ~Ithread();
+    virtual ~IThread();
 
+    // 开启的回调
     virtual bool onStart() = 0;
+
+    // 处理业务
     virtual void onExecute() = 0;
+
+    // 停止的回调
     virtual void onStop() = 0;
 
-  public :
+  public:
     // 开启
     bool start();
 
     // 停止
     void stop();
 
+    static bool check(pthread_t id);
+
     // ID
-    pthread_t id() const { return pthread_t id; }
-    
+    pthread_t id() const { return m_ThreadID; }
+
     // 运行中
-    bool isRunnning() const { return m_Status == eRunning; }
+    bool isRunning() const { return m_Status == eRunning; }
 
     // 分离
     void setDetach() { m_IsDetach = true; }
 
-    //
+    // 设置栈大小
     void setStackSize(uint32_t size) { m_StackSize = size; }
 
-    static bool check(pthread_t id);
+  private:
+    enum {
+      eReady = 0,
+      eRunning = 1,
+      eStoping = 2,
+      eStoped = 3,
+    };
 
-  private :
     void notify();
+
     static void * threadfunc(void * arg);
 
-  private :
-    enum {
-      eReady = 0;
-      eRunning = 1;
-      eStoping = 2;
-      sStoped = 3;
-    };
+  private:
 
     bool m_IsDetach;
     uint32_t m_StackSize;
@@ -65,6 +72,8 @@ class IThread {
 };
 
 #if 0
+
+#endif
 
 }
 

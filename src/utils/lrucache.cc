@@ -147,7 +147,7 @@ int main() {
 
   for (int i = 1; i <= 5; i++) {
     cache.remove(i);
-    printf("remove cache and cache size is : %lu\n", cache.size());
+    printf("remove cache and now cache size is : %lu\n", cache.size());
   }
 
   return 1;
