@@ -102,13 +102,58 @@ void * IThread::threadfunc(void * arg) {
 
 }
 
-class CSyncServer : public Utils::IThread {
-  public:
-    virtual bool onStart();
-    virtual void onExecute();
-    virtual void onStop();
+class DemoIThread : public Utils::IThread {
+
+public:
+  DemoIThread(uint8_t count) : m_Count(count) {
+    pthread_mutex_init(&m_Lock, NULL);
+  }
+
+  ~DemoIThread() {
+    pthread_mutex_destroy(&m_Lock);
+  }
+
+  void process() {
+    pthread_mutex_lock(&m_Lock);
+
+    while (m_Count--) {
+      printf("count now is : %d\n", m_Count);
+    }
+
+    pthread_mutex_unlock(&m_Lock);
+  }
+
+public:
+  bool onStart() {
+    if (m_Count >= 100) {
+      return true;
+    }
+
+    return false;
+  }
+
+  void onExecute() {
+    this->process();
+  }
+
+  void onStop(){
+    m_Count = 0;
+  }
+
+private:
+  int m_Count;
+  pthread_mutex_t m_Lock;
+
+  uint8_t m_Number;
+  std::vector<DemoIThread *> m_DemoIThread;
 };
 
-// int main() {
-//   CSyncServer cSyncServer = new CSyncServer();
-// }
+int main() {
+  DemoIThread demoIThread(101);
+
+  if (demoIThread.onStart()) {
+    demoIThread.onExecute();
+  }
+
+  demoIThread.onStop();
+}
