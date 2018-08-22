@@ -906,28 +906,25 @@ bool CSemlock::isOwner() const {
 
 int main(int argc, char ** argv) {
 
-  int32_t i = 0;
-
   Utils::LogFile logger("./data", "libuv.server.log");
 
   if(!logger.open()) {
-    printf("open LogFile failed .\n");
+    printf("####### open LogFile failed #######\n");
     return -1;
   }
 
-  printf("open LogFile success .\n");
+  printf("####### open LogFile success #######\n");
 
-  logger.setMaxSize(5*1024);
+  logger.setMaxSize(5 * 1024);
 
-  srand(time(NULL));
-
-  for(i = 1; i < 10; ++i) {
-    Utils::TimeUtils::sleep(1000);
-    uint8_t level = 1 + rand()%5;
-    logger.print(level, "process two test logfile %d .\n", i);
+  for(int i = 1; i < 10; ++i) {
+    Utils::TimeUtils::sleep(1);
+    logger.print(1 + rand() % 5, "process two test logfile %d .\n", i);
   }
   
   logger.close();
+
+  printf("####### Input LogFile success #######\n");
 
   return 0;
 }

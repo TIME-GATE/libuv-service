@@ -12,6 +12,7 @@ namespace Utils {
 class IThread {
 
   public:
+  
     IThread();
 
     virtual ~IThread();
@@ -32,9 +33,10 @@ class IThread {
     // 停止
     void stop();
 
+    // 检查
     static bool check(pthread_t id);
 
-    // ID
+    // 获取ID
     pthread_t id() const { return m_ThreadID; }
 
     // 运行中

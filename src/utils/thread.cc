@@ -6,6 +6,7 @@
 
 #include "time.h"
 #include "thread.h"
+#include "timeutils.h"
 
 namespace Utils {
 
@@ -28,6 +29,7 @@ IThread::~IThread() {
 }
 
 bool IThread::start() {
+
   int32_t rc = 0;
   pthread_attr_t attr;
 
@@ -36,12 +38,14 @@ bool IThread::start() {
   if (m_StackSize > 0) {
     pthread_attr_setstacksize(&attr, m_StackSize);
   }
+
   if (m_IsDetach) {
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
   }
 
   m_Status = eRunning;
-  rc = pthread_create(&m_ThreadID, &attr, threadfunc, this);
+
+  rc = pthread_create(&m_ThreadID, &attr, threadfunc, this);  
   pthread_attr_destroy(&attr);
 
   return (rc == 0);
@@ -78,10 +82,13 @@ bool IThread::check(pthread_t id) {
 }
 
 void * IThread::threadfunc(void * arg) {
-  IThread *thread = (IThread *)arg;
+  
+  IThread * thread = (IThread *)arg;
 
   sigset_t mask;
   sigfillset(&mask);
+  
+
   pthread_sigmask(SIG_SETMASK, &mask, NULL);
 
   // 线程开始
@@ -102,6 +109,8 @@ void * IThread::threadfunc(void * arg) {
 
 }
 
+
+/* 测试Thread Demo */
 class DemoIThread : public Utils::IThread {
 
 public:
@@ -114,9 +123,10 @@ public:
   }
 
   void process() {
-    pthread_mutex_lock(&m_Lock);
 
-    while (m_Count--) {
+    pthread_mutex_lock(&m_Lock);
+    while (--m_Count >= 0) {
+      Utils::TimeUtils::sleep(1000);
       printf("count now is : %d\n", m_Count);
     }
 
@@ -125,7 +135,7 @@ public:
 
 public:
   bool onStart() {
-    if (m_Count >= 100) {
+    if (m_Count >= 0) {
       return true;
     }
 
@@ -149,11 +159,19 @@ private:
 };
 
 int main() {
-  DemoIThread demoIThread(101);
+  Utils::IThread * thread1 = new DemoIThread(10);
+  Utils::IThread * thread2 = new DemoIThread(10);
 
-  if (demoIThread.onStart()) {
-    demoIThread.onExecute();
-  }
+  printf("####### Thread start #######\n");
 
-  demoIThread.onStop();
+  thread1->start();
+  thread2->start();
+
+  printf("####### do otherwise #######\n");
+
+  thread1->stop();
+  thread2->stop();
+
+  printf("####### Thread stop #######\n");
+
 }
