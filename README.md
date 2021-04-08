@@ -27,7 +27,7 @@
 |____messages           # protobuf
 | |____README.md
 |____Makefile           # Make文件
-|____dependencies       # 依赖库
+|____deps       # 依赖库
 | |____README.md
 | |____*.*
 |____README.md
@@ -48,7 +48,7 @@
 | |____routes.h
 | |____test             # 测试
 | | |____*.*
-| |____utils            # 工具类，如时间戳等
+| |____utils            # 工具类
 | | |____timeutils.h
 | | |____timeutils.cc
 | | |____*.*
@@ -58,10 +58,10 @@
 | | |____libuv.h
 | | |____libuv.cc
 | | |____*.*  
-| |____server.cc        # 项目入口
+| |____server.cc        # 入口
 | |____*.*
 ```
-### 五、运行
+### 五、编译执行
 
 * server
 
